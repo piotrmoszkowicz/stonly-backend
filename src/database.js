@@ -15,7 +15,7 @@ const database = new Sequelize(
     host: dbConfig.host,
     port: dbConfig.port,
     dialect: dbConfig.engine,
-    logging: (msg) => logger.info(msg),
+    logging: msg => logger.info(msg),
 
     pool: {
       max: dbConfig.maxConnections,
@@ -29,10 +29,9 @@ const database = new Sequelize(
 
 const modelsPath = __dirname + "/models/";
 
-fs
-  .readdirSync(modelsPath)
+fs.readdirSync(modelsPath)
   .filter(file => {
-    return (file.indexOf('.') !== 0) && (file.slice(-3) === '.js');
+    return file.indexOf(".") !== 0 && file.slice(-3) === ".js";
   })
   .forEach(file => {
     const model = database.import(path.join(modelsPath, file));
