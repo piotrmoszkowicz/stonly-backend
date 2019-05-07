@@ -1,39 +1,46 @@
-const ISSUE_MODEL = "ston_models_issue";
+const ISSUES_TABLE_NAME = "ston_models_issues";
 
 /*
   Creates ISSUE MODEL
  */
 module.exports = (database, DataTypes) => {
   return database.define(
-    ISSUE_MODEL,
+    "Issue",
     {
       title: {
+        allowNull: false,
         type: DataTypes.STRING,
         field: "title",
         validate: {
-          len: {
-            args: [3, 64],
-            msg: "Issue's title must have between 3-64 characters"
-          }
+          len: [3, 64]
         }
       },
       description: {
+        allowNull: false,
         type: DataTypes.STRING,
         field: "description",
         validate: {
-          len: {
-            args: [10, 1024],
-            msg: "Issue's description must have between 10-1024 characters"
-          }
+          len: [10, 1024]
         }
       },
       state: {
+        defaultValue: "Open",
         type: DataTypes.ENUM,
         field: "state",
         values: ["Open", "Pending", "Closed"]
-      }
+      },
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE
     },
     {
+      indexes: [
+        {
+          unique: false,
+          fields: ["state"]
+        }
+      ],
+      tableName: ISSUES_TABLE_NAME,
+      timestamp: false,
       underscored: true
     }
   );
