@@ -1,5 +1,8 @@
 const ISSUE_MODEL = "ston_models_issue";
 
+/*
+  Creates ISSUE MODEL
+ */
 module.exports = (database, DataTypes) => {
   return database.define(
     ISSUE_MODEL,
