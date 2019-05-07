@@ -53,11 +53,7 @@ router.post("/issue", async (req, res) => {
       data: issue
     });
   } catch (error) {
-    logger.log(
-      "error",
-      "Error while creating issue",
-      { error }
-    );
+    logger.log("error", "Error while creating issue", { error });
     return res.status(400).json({
       error: "Error while creating issue, please specify correct data.",
       reason: error.errors.reduce((acc, err) => acc + err.message + ". ", "")

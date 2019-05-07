@@ -69,7 +69,10 @@ const issueService = {
     try {
       const currentIssue = await issueService.getIssue(id);
       if (currentIssue === null) throw "Issue not found.";
-      const validatedData = issueService._validateUpdates(currentIssue, issueUpdates);
+      const validatedData = issueService._validateUpdates(
+        currentIssue,
+        issueUpdates
+      );
       return currentIssue.update(validatedData);
     } catch (err) {
       throw err;
@@ -106,7 +109,9 @@ const issueService = {
    * @private
    */
   _validateUpdates: (issue, issueUpdates) => {
-    const filteredUpdates = issueService._pickAllowedUpdateProperties(issueUpdates);
+    const filteredUpdates = issueService._pickAllowedUpdateProperties(
+      issueUpdates
+    );
     if (!filteredUpdates.state) return issueUpdates;
     return issueService._validateState(issue.state, filteredUpdates.state)
       ? issueUpdates

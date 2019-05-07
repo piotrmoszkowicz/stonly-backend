@@ -36,7 +36,7 @@ module.exports = (database, DataTypes) => {
       indexes: [
         {
           unique: false,
-          fields: ['state']
+          fields: ["state"]
         }
       ],
       tableName: ISSUES_TABLE_NAME,
