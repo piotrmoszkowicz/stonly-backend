@@ -1,9 +1,9 @@
 const issueService = require("@services/issue");
 
-jest.mock('@models/issue', () => () => {
+jest.mock("@models/issue", () => () => {
   const SequelizeMock = require("sequelize-mock");
   const dbMock = new SequelizeMock();
-  return dbMock.define('Issue',  {
+  return dbMock.define("Issue", {
     id: 1,
     title: "Test title2",
     description: "Test description2",
