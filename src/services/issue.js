@@ -2,8 +2,8 @@ const _ = require("lodash");
 
 const { Issue } = require("@/database");
 
-const ISSUE_CREATE_ALLOWED_PROPERTIES = ["title", "content"];
-const ISSUE_UPDATE_ALLOWED_PROPERTIES = ["title", "content", "state"];
+const ISSUE_CREATE_ALLOWED_PROPERTIES = ["title", "description"];
+const ISSUE_UPDATE_ALLOWED_PROPERTIES = ["title", "description", "state"];
 
 const issueService = {
   /**
@@ -12,7 +12,7 @@ const issueService = {
    * @returns {Promise<Object>}         -   New issue instance
    */
   createIssue: async issueObject => {
-    const filteredCreationData = this._pickAllowedCreationProperties(
+    const filteredCreationData = issueService._pickAllowedCreationProperties(
       issueObject
     );
     const newIssue = Issue.build({
@@ -30,7 +30,7 @@ const issueService = {
    */
   deleteIssue: async id => {
     try {
-      const issue = await this.getIssue(id);
+      const issue = await issueService.getIssue(id);
       await issue.destroy();
       return true;
     } catch (err) {
@@ -67,8 +67,9 @@ const issueService = {
    */
   updateIssue: async (id, issueUpdates) => {
     try {
-      const currentIssue = await this.getIssue(id);
-      const validatedData = this._validateUpdates(currentIssue, issueUpdates);
+      const currentIssue = await issueService.getIssue(id);
+      if (currentIssue === null) throw "Issue not found.";
+      const validatedData = issueService._validateUpdates(currentIssue, issueUpdates);
       return currentIssue.update(validatedData);
     } catch (err) {
       throw err;
@@ -105,8 +106,9 @@ const issueService = {
    * @private
    */
   _validateUpdates: (issue, issueUpdates) => {
-    const filteredUpdates = this._pickAllowedUpdateProperties(issueUpdates);
-    return this._validateState(issue.state, filteredUpdates.state)
+    const filteredUpdates = issueService._pickAllowedUpdateProperties(issueUpdates);
+    if (!filteredUpdates.state) return issueUpdates;
+    return issueService._validateState(issue.state, filteredUpdates.state)
       ? issueUpdates
       : {};
   },
@@ -121,8 +123,8 @@ const issueService = {
   _validateState: (oldState, newState) => {
     if (oldState === newState) return true;
     if (
-      oldState === "closed" ||
-      (oldState === "pending" && newState === "created")
+      oldState === "Closed" ||
+      (oldState === "Pending" && newState === "Open")
     )
       return false;
     return true;
