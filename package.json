@@ -1,0 +1,65 @@
+{
+  "name": "stonly-backend",
+  "version": "1.0.0",
+  "description": "Backend for Stonly's recruitment task.",
+  "scripts": {
+    "check": "npm run style && npm test",
+    "eslint": "npm run style -- --fix",
+    "dev": "env NODE_ENV=development nodemon $NODE_DEBUG_OPTION -w src -w config -r module-alias/register src/app.js",
+    "start": "node -r module-alias/register src/app.js",
+    "style": "eslint src tests",
+    "prettier": "prettier --write **/*.js",
+    "reformat": "npm run prettier && npm run eslint",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piotrmoszkowicz/stonly-backend.git"
+  },
+  "author": "Piotr Moszkowicz",
+  "license": "MIT",
+  "jest": {
+    "testRegex": "(/__tests__/unit/.*|\\.(test|spec))\\.(js)$",
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@controllers/(.*)$": "<rootDir>/src/controllers/$1",
+      "@models/(.*)$": "<rootDir>/src/models/$1",
+      "@services/(.*)$": "<rootDir>/src/services/$1",
+      "@utils/(.*)$": "<rootDir>/src/utils/$1"
+    }
+  },
+  "_moduleAliases": {
+    "@api": "src/api/",
+    "@models": "src/models/",
+    "@services": "src/services/",
+    "@utils": "src/utils/"
+  },
+  "bugs": {
+    "url": "https://github.com/piotrmoszkowicz/stonly-backend/issues"
+  },
+  "homepage": "https://github.com/piotrmoszkowicz/stonly-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "config": "^3.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "module-alias": "^2.2.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.8.5",
+    "validate.js": "^0.12.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslit": "^6.0.0",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.0",
+    "prettier": "^1.17.0"
+  }
+}
