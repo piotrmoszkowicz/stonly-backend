@@ -15,6 +15,7 @@ module.exports = {
     engine: process.env.DATABASE_ENGINE || "mysql",
     maxConnections: process.env.DATABASE_MAX_CONN || 25,
     minConnections: process.env.DATABASE_MIN_CONN || 0,
-    maxIdleTime: process.env.DATABASE_MAX_IDLE_MS || 30000
+    maxIdleTime: process.env.DATABASE_MAX_IDLE_MS || 30000,
+    forceMigrate: false
   }
 };

@@ -3,6 +3,7 @@ const cors = require("cors");
 const config = require("config");
 const express = require("express");
 
+const database = require("@/database");
 const logger = require("@utils/logger");
 
 const app = express();
@@ -20,8 +21,13 @@ app.use(cors(corsOptions));
 
 app.use("/api", require("@api"));
 
-app.listen(config.get("server.port"), () => {
-  logger.info(`Server listening on port ${config.get("server.port")}`);
+app.listen(config.get("server.port"), async err => {
+  if (err) {
+    logger.log("error", "App error", { message: err });
+    return;
+  }
+  await database.sync({ force: config.get("database.forceMigrate") });
+  logger.log("info", `Server listening on port ${config.get("server.port")}`);
 });
 
 module.exports = {
