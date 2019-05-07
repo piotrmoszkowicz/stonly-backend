@@ -15,6 +15,7 @@ module.exports = {
     engine: "mysql",
     maxConnections: 25,
     minConnections: 0,
-    maxIdleTime: 30000
+    maxIdleTime: 30000,
+    forceMigrate: false
   }
 };
